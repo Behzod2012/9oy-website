@@ -7,6 +7,18 @@
     <title>CARZONE | Bosh sahifa</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+<script>
+/* Login tekshiruvi: tizimga kirmagan foydalanuvchini login sahifasiga yuboradi. */
+(function () {
+  const user = localStorage.getItem('currentUser');
+  if (!user) {
+    const next = encodeURIComponent(window.location.pathname.split('/').pop() + window.location.search + window.location.hash);
+    window.location.replace('login.html?next=' + next);
+  }
+})();
+</script>
+
 </head>
 
 <body>

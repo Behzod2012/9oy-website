@@ -1,0 +1,549 @@
+    <!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kirish - CARZONE</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #20334a;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #e63946;
+        }
+
+        nav a {
+            color: #20334a;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #e63946;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px 40px;
+            width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-container h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .login-container h1 span {
+            color: #e63946;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 35px;
+            font-size: 14px;
+        }
+        main {
+    background: linear-gradient(
+        rgba(0, 255, 255, 0.534),
+        rgb(0, 0, 0)
+    );
+}
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #e63946;
+            color: #20334a;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: #20334a;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #e63946;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+            border: none;
+            border-radius: 10px;
+            color: #20334a;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 255, 200, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 200, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+}.hero {
+    min-height: 100vh;
+    background: url('evolt-bg.png') center/cover no-repeat;
+    position: relative;
+}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .success-msg {
+            color: #51cf66;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                width: 90%;
+                padding: 35px 25px;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            nav a {
+                margin-left: 15px;
+                font-size: 13px;
+            }
+        }
+    </style>
+<style>
+
+/* CARZONE modern colorful refresh */
+:root{
+ --bg:#dff6f2;--bg-soft:#e8e7ff;--surface:rgba(255,255,255,.72);
+ --surface-2:#f8f4ff;--line:#c5e6e3;--line-soft:#cfe8e7;
+ --text:#20334a;--muted:#647b8d;--muted-2:#7e91a0;
+ --accent:#087f8c;--accent-hover:#096b78;
+ --accent-grad:linear-gradient(135deg,#13a6a0,#4778d8 55%,#8c62d9);
+ --success:#16885b;--danger:#d45a67;
+ --shadow-sm:0 5px 18px rgba(48,86,111,.08);
+ --shadow-md:0 14px 36px rgba(48,86,111,.13);
+ --shadow-lg:0 24px 60px rgba(48,86,111,.18);
+ --glow:0 10px 26px rgba(19,166,160,.20);
+}
+html,body{background:linear-gradient(125deg,#dff6f2 0%,#e8e7ff 48%,#fff0df 100%) fixed!important;color:#20334a!important}
+body{min-height:100vh}
+header,.header{background:rgba(237,250,248,.88)!important;border-bottom:1px solid #c6e6e4!important;box-shadow:0 8px 25px rgba(55,95,118,.06)}
+.logo{color:#20334a!important}.logo span{color:#087f8c!important}
+nav a,.header nav a{color:#526c80!important}
+nav a:hover,.header nav a:hover{color:#087f8c!important;background:#d5f2ef!important}
+nav a.active,.header nav a.active{color:#087f8c!important;background:#c9efea!important;box-shadow:inset 0 0 0 1px #9bd9d3!important}
+main{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(71,120,216,.12),transparent 70%)!important}
+.car-card,.profile-card,.cars-section,.payment-card,.contact-form,.comparison-card,.step-card{
+ background:rgba(255,255,255,.78)!important;color:#20334a!important;border:1px solid #c6e6e4!important;
+ box-shadow:0 12px 28px rgba(43,83,107,.10)!important;backdrop-filter:blur(12px)
+}
+.car-card{border-radius:20px!important;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
+.car-card:hover{transform:translateY(-5px)!important;border-color:#68c9c3!important;box-shadow:0 18px 38px rgba(43,83,107,.16)!important}
+.car-info h3,.car-name,.section-title h2,.hero h1,.page-header h1{color:#20334a!important}
+.price,.car-price,.section-title p,.hero-small{color:#087f8c!important}
+.details,.car-info .details{color:#607a8d!important}
+button,.main-btn,.buy-btn,.confirm-btn,.calculate-btn,.login-btn,.btn-edit{background:linear-gradient(135deg,#12a6a0,#4778d8)!important;color:#fff!important;border:0!important;border-radius:12px!important;box-shadow:0 8px 18px rgba(43,132,169,.18)}
+button:hover,.main-btn:hover,.buy-btn:hover,.confirm-btn:hover,.calculate-btn:hover,.login-btn:hover,.btn-edit:hover{filter:brightness(1.06);transform:translateY(-2px)}
+.brand-btn{background:rgba(255,255,255,.72)!important;color:#35546a!important;border:1px solid #b9deda!important}
+.brand-btn.active{background:linear-gradient(135deg,#12a6a0,#4778d8)!important;color:white!important}
+input,select,textarea{background:rgba(255,255,255,.88)!important;color:#20334a!important;border:1px solid #b9deda!important;border-radius:12px!important}
+input::placeholder,textarea::placeholder{color:#8095a3!important}
+footer{background:rgba(222,245,242,.75)!important;color:#647b8d!important;border-top:1px solid #c6e6e4!important}
+.hero{background:radial-gradient(ellipse at 80% 30%,rgba(255,190,122,.36),transparent 42%),radial-gradient(ellipse at 10% 90%,rgba(73,191,185,.28),transparent 45%)!important}
+.dark-section{background:transparent!important}
+.hidden{display:none!important}
+.favorite-btn{position:absolute;right:14px;top:14px;z-index:5;width:42px;height:42px;border-radius:50%!important;background:rgba(255,255,255,.92)!important;color:#d45a67!important;border:1px solid #d6e8e8!important;font-size:21px;padding:0;box-shadow:0 5px 16px #3456!important}
+.car-card{position:relative}
+.card-buy-btn{margin:0 16px 16px;width:calc(100% - 32px);padding:12px}
+.fav-section{max-width:1000px;margin:0 auto 35px;padding:0 20px}
+.fav-section h2{margin:25px 0 15px;color:#20334a}
+.fav-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.fav-item{background:rgba(255,255,255,.75);border:1px solid #c6e6e4;border-radius:16px;padding:15px;color:#20334a}
+.fav-item img{width:100%;height:140px;object-fit:cover;border-radius:12px}
+.fav-item button{margin-top:10px;padding:9px 12px}
+@media(max-width:700px){header,.header{padding:12px 4%!important;flex-wrap:wrap}.header nav{flex-wrap:wrap;gap:3px}.header nav a{padding:7px 9px;font-size:12px}.car-card{margin-bottom:8px}}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <span>CAR</span>ZONE
+    </div>
+
+    <nav>
+        <a href="index.html">Bosh sahifa</a>
+        <a href="index.html">Avtomobillar</a>
+        <a href="#">Oylik to'lov</a>
+        <a href="#">Profil</a>
+        <a href="#">Aloqa</a>
+    </nav>
+</header>
+
+<div class="login-container">
+
+    <h1>Xush <span>kelibsiz</span></h1>
+    <p class="login-subtitle">CARZONE ga kirish uchun ma'lumotlaringizni kiriting</p>
+
+    <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="login">Kirish</button>
+        <button class="tab-btn" data-tab="register">Ro'yxatdan o'tish</button>
+    </div>
+
+    <!-- KIRISH FORMASI -->
+    <form id="loginForm" class="form-section active">
+
+        <div class="form-group">
+            <label>Login (email yoki telefon)</label>
+            <input
+                type="text"
+                id="loginEmail"
+                placeholder="example@mail.com"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Parol</label>
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="••••••••"
+                required
+            >
+        </div>
+
+        <p class="error-msg" id="loginError">Login yoki parol noto'g'ri!</p>
+
+        <button type="submit" class="submit-btn">Kirish</button>
+    </form>
+
+    <!-- RO'YXATDAN O'TISH FORMASI -->
+    <form id="registerForm" class="form-section">
+
+        <div class="form-group">
+            <label>To'liq ismingiz</label>
+            <input
+                type="text"
+                id="regName"
+                placeholder="Ismingizni kiriting"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input
+                type="email"
+                id="regEmail"
+                placeholder="example@mail.com"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Telefon raqam</label>
+            <input
+                type="tel"
+                id="regPhone"
+                placeholder="+998 90 123 45 67"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Parol</label>
+            <input
+                type="password"
+                id="regPassword"
+                placeholder="Kamida 6 ta belgi"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Parolni tasdiqlang</label>
+            <input
+                type="password"
+                id="regConfirm"
+                placeholder="Parolni qayta kiriting"
+                required
+            >
+        </div>
+
+        <p class="error-msg" id="regError"></p>
+        <p class="success-msg" id="regSuccess">Ro'yxatdan o'tish muvaffaqiyatli! Endi tizimga kiring.</p>
+
+        <button type="submit" class="submit-btn">Ro'yxatdan o'tish</button>
+    </form>
+
+</div>
+
+<script>
+
+// Tab almashish
+const tabButtons = document.querySelectorAll(".tab-btn");
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+
+tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        if (btn.dataset.tab === "login") {
+            loginForm.classList.add("active");
+            registerForm.classList.remove("active");
+        } else {
+            registerForm.classList.add("active");
+            loginForm.classList.remove("active");
+        }
+    });
+});
+
+// ============ RO'YXATDAN O'TISH ============
+registerForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const phone = document.getElementById("regPhone").value.trim();
+    const password = document.getElementById("regPassword").value;
+    const confirm = document.getElementById("regConfirm").value;
+
+    const errorMsg = document.getElementById("regError");
+    const successMsg = document.getElementById("regSuccess");
+
+    errorMsg.style.display = "none";
+    successMsg.style.display = "none";
+
+    // Tekshiruvlar
+    if (name.length < 2) {
+        errorMsg.textContent = "Ism kamida 2 ta harfdan iborat bo'lishi kerak!";
+        errorMsg.style.display = "block";
+        return;
+    }
+
+    if (password.length < 6) {
+        errorMsg.textContent = "Parol kamida 6 ta belgidan iborat bo'lishi kerak!";
+        errorMsg.style.display = "block";
+        return;
+    }
+
+    if (password !== confirm) {
+        errorMsg.textContent = "Parollar mos kelmadi!";
+        errorMsg.style.display = "block";
+        return;
+    }
+
+    // Foydalanuvchini localStorage ga saqlash
+    const users = JSON.parse(localStorage.getItem("carzone_users") || "[]");
+
+    // Email allaqachon ro'yxatdan o'tganmi tekshirish
+    const exists = users.find(u => u.email === email);
+    if (exists) {
+        errorMsg.textContent = "Bu email allaqachon ro'yxatdan o'tgan!";
+        errorMsg.style.display = "block";
+        return;
+    }
+
+    users.push({
+        name: name,
+        email: email,
+        phone: phone,
+        password: password,
+        date: new Date().toLocaleString('uz-UZ')
+    });
+
+    localStorage.setItem("carzone_users", JSON.stringify(users));
+
+    // Muvaffaqiyat
+    successMsg.style.display = "block";
+    registerForm.reset();
+
+    // 2 soniyadan keyin login tabiga o'tish
+    setTimeout(() => {
+        tabButtons[0].click();
+        successMsg.style.display = "none";
+    }, 2000);
+});
+
+// ============ KIRISH ============
+loginForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const errorMsg = document.getElementById("loginError");
+
+    errorMsg.style.display = "none";
+
+    const users = JSON.parse(localStorage.getItem("carzone_users") || "[]");
+
+    // Foydalanuvchini topish
+    const user = users.find(u => 
+        (u.email === email || u.phone === email) && u.password === password
+    );
+
+    if (!user) {
+        errorMsg.textContent = "Login yoki parol noto'g'ri!";
+        errorMsg.style.display = "block";
+        return;
+    }
+
+    // Tizimga kirgan foydalanuvchini saqlash
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
+    // Xush kelibsiz xabari va index.html ga yo'naltirish
+    alert("Xush kelibsiz, " + user.name + "!");
+    const nextPage = new URLSearchParams(window.location.search).get('next');
+    window.location.href = (nextPage && !nextPage.includes('://') && !nextPage.startsWith('//')) ? nextPage : 'index.html';
+});
+
+// ============ DEMO HISOB ============
+// Agar foydalanuvchilar ro'yxati bo'sh bo'lsa, demo hisob qo'shamiz
+(function() {
+    const users = JSON.parse(localStorage.getItem("carzone_users") || "[]");
+    if (users.length === 0) {
+        users.push({
+            name: "Demo Foydalanuvchi",
+            email: "demo@carzone.uz",
+            phone: "+998 90 123 45 67",
+            password: "demo123",
+            date: new Date().toLocaleString('uz-UZ')
+        });
+        localStorage.setItem("carzone_users", JSON.stringify(users));
+        console.log("Demo hisob yaratildi:");
+        console.log("Email: demo@carzone.uz");
+        console.log("Parol: demo123");
+    }
+})();
+
+</script>
+
+</body>
+</html>

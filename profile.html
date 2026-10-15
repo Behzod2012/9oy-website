@@ -500,6 +500,19 @@ body{background:radial-gradient(circle at 10% 10%,#d6f5ef,transparent 34%),radia
 .purchased-meta{font-size:13px;color:#647b8d;margin-top:6px}
 @media(max-width:600px){.cars-section .car-card{flex-direction:column;align-items:flex-start}.car-card img{width:100%;height:170px}}
 </style>
+
+<script>
+/* Login tekshiruvi: profilga faqat haqiqiy saqlangan akkaunt bilan kiriladi. */
+(function () {
+  let user = null;
+  try { user = JSON.parse(localStorage.getItem('currentUser') || 'null'); } catch (_) {}
+  if (!user || (!user.email && !user.phone)) {
+    const next = encodeURIComponent('profile.html');
+    window.location.replace('login.html?next=' + next);
+  }
+})();
+</script>
+
 </head>
 <body>
 <header class="header">
@@ -591,7 +604,7 @@ body{background:radial-gradient(circle at 10% 10%,#d6f5ef,transparent 34%),radia
         <div class="modal">
             <div class="icon">🚪</div>
             <h3>Tizimdan chiqish</h3>
-            <p>Rostdan ham chiqmoqchimisiz? Barcha ma'lumotlar o'chiriladi.</p>
+            <p>Rostdan ham tizimdan chiqmoqchimisiz? Ma’lumotlaringiz saqlanib qoladi.</p>
             <div>
                 <button class="btn-cancel-lg" onclick="closeLogoutModal()">Bekor qilish</button>
                 <button class="btn-confirm" onclick="confirmLogout()">Ha, chiqish</button>
@@ -602,195 +615,69 @@ body{background:radial-gradient(circle at 10% 10%,#d6f5ef,transparent 34%),radia
     <div class="toast" id="toast"></div>
 
     <script>
-        let userProfile = JSON.parse(localStorage.getItem('userProfile') || 'null');
-
-        if (!userProfile) {
-            window.location.href = 'index.html';
-        }
-
-        function loadProfile() {
-            document.getElementById('profileName').textContent =
-                userProfile.firstName + ' ' + userProfile.lastName;
-            document.getElementById('profilePhone').textContent = userProfile.phone;
-            document.getElementById('profileEmail').textContent =
-                (userProfile.firstName + userProfile.lastName).toLowerCase() + '@carzone.uz';
-            document.getElementById('avatarInitial').textContent =
-                userProfile.firstName.charAt(0).toUpperCase();
-        }
-
-        loadProfile();
-
-        // Mashinalarni yuklash
-        const purchasedCars = JSON.parse(localStorage.getItem('purchasedCars') || '[]');
-        const carsGrid = document.getElementById('carsGrid');
-        const clearBtn = document.getElementById('clearBtn');
-
-        if (purchasedCars.length === 0) {
-            carsGrid.innerHTML = `
-                <div class="empty-cars">
-                    <div class="icon">🚗</div>
-                    <p>Hali hech qanday mashina sotib olmadingiz</p>
-                    <a href="index.html">Mashina tanlash</a>
-                </div>
-            `;
-        } else {
-            purchasedCars.forEach((car, index) => {
-                const card = document.createElement('div');
-                card.className = 'car-card';
-                card.style.animationDelay = (index * 0.1) + 's';
-                card.innerHTML = `
-                    <img src="${car.image}" alt="${car.name}">
-                    <div class="car-details">
-                        <div class="car-name">${car.name}</div>
-                        <div class="car-price">${car.price}</div>
-                        <div class="car-meta">
-                            <span> ${car.date}</span>
-                            <span>📆 ${car.year}</span>
-                            <span>⛽ ${car.fuel}</span>
-                        </div>
-                        <div class="payment-badge">💳 ${car.paymentMethod}</div>
-                    </div>
-                    <div class="status-badge">✅ Sotib olindi</div>
-                `;
-                carsGrid.appendChild(card);
-            });
-
-            clearBtn.style.display = 'block';
-        }
-
-        // Profilni o'zgartirish
-        function showEditModal() {
-            document.getElementById('editFirstName').value = userProfile.firstName;
-            document.getElementById('editLastName').value = userProfile.lastName;
-            document.getElementById('editPhone').value = userProfile.phone;
-            document.getElementById('editModal').classList.add('show');
-        }
-
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('show');
-        }
-
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const newFirstName = document.getElementById('editFirstName').value.trim();
-            const newLastName = document.getElementById('editLastName').value.trim();
-            const newPhone = document.getElementById('editPhone').value.trim();
-
-            if (!newFirstName || !newLastName || !newPhone) {
-                showToast('⚠️ Barcha maydonlarni to\'ldiring!', '#e74c3c');
-                return;
-            }
-
-            userProfile = {
-                firstName: newFirstName,
-                lastName: newLastName,
-                phone: newPhone
-            };
-
-            localStorage.setItem('userProfile', JSON.stringify(userProfile));
-
-            purchasedCars.forEach(car => {
-                car.buyer = { ...userProfile };
-            });
-            localStorage.setItem('purchasedCars', JSON.stringify(purchasedCars));
-
-            loadProfile();
-            closeEditModal();
-            showToast('✅ Profil muvaffaqiyatli yangilandi!');
-        });
-
-        document.getElementById('editModal').addEventListener('click', function(e) {
-            if (e.target === this) closeEditModal();
-        });
-
-        // Chiqish
-        function showLogoutModal() {
-            document.getElementById('logoutModal').classList.add('show');
-        }
-
-        function closeLogoutModal() {
-            document.getElementById('logoutModal').classList.remove('show');
-        }
-
-        function confirmLogout() {
-            localStorage.removeItem('userProfile');
-            localStorage.removeItem('purchasedCars');
-            showToast('👋 Tizimdan chiqildi!', '#e74c3c');
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1000);
-        }
-
-        document.getElementById('logoutModal').addEventListener('click', function(e) {
-            if (e.target === this) closeLogoutModal();
-        });
-
-        // Tarixni tozalash
-        function clearHistory() {
-            if (confirm('Barcha sotib olish tarixini o\'chirmoqchimisiz?')) {
-                localStorage.removeItem('purchasedCars');
-                location.reload();
-            }
-        }
-
-        // Toast
-        function showToast(message, color = '#27ae60') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.style.background = color;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-       }
- 
-(function(){
- const favorites=JSON.parse(localStorage.getItem('carzoneFavorites')||'[]');
- const grid=document.getElementById('favoriteCars'), empty=document.getElementById('noFavorites');
- if(!grid)return;
- if(favorites.length){empty.style.display='none';}
- favorites.forEach(car=>{
-   const item=document.createElement('div'); item.className='fav-item';
-   item.innerHTML=`<img src="${car.image}" alt="${car.name}"><h3>${car.name}</h3><p>${car.price}</p><button type="button">Sotib olish</button><button type="button" class="remove-fav">Olib tashlash</button>`;
-   item.querySelector('button').addEventListener('click',()=>{
-      // Yoqtirilgan mashinani faqat tanlab, xarid sahifasiga yuboramiz.
-      // Sotib olinganlar ro'yxatiga faqat to'lov formasi tasdiqlangandan keyin qo'shiladi.
-      localStorage.setItem('selectedCar', JSON.stringify(car));
-      location.href='buy.html';
-   });
-   item.querySelector('.remove-fav').addEventListener('click',()=>{
-      const next=JSON.parse(localStorage.getItem('carzoneFavorites')||'[]').filter(x=>x.name!==car.name);
-      localStorage.setItem('carzoneFavorites',JSON.stringify(next)); location.reload();
-   });
-   grid.appendChild(item);
- });
-})();
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded',()=>{
-  const bought=JSON.parse(localStorage.getItem('purchasedCars')||'[]');
-  const section=document.querySelector('.cars-section');
-  if(!section)return;
-  // Eski statik ro'yxatni olib, haqiqiy buyurtmalar bilan yangilash
-  const title=section.querySelector('.cars-section-title');
-  if(!title)return;
-  section.querySelectorAll('.car-card').forEach(el=>el.remove());
-  let empty=section.querySelector('.empty-purchases');
-  if(!empty){empty=document.createElement('p');empty.className='empty-purchases';empty.textContent='Hozircha sotib olingan avtomobillar yo‘q.';empty.style.cssText='color:#647b8d;padding:18px 0';section.appendChild(empty);}
-  if(!bought.length){empty.style.display='block';return;}
-  empty.style.display='none';
-  bought.slice().reverse().forEach(car=>{
-    const card=document.createElement('article');card.className='car-card';
-    const img=document.createElement('img');img.src=car.image||'';img.alt=car.name||'Avtomobil';
-    const details=document.createElement('div');details.className='car-details';
-    const name=document.createElement('div');name.className='car-name';name.textContent=car.name||'Avtomobil';
-    const price=document.createElement('div');price.className='car-price';price.textContent=typeof car.price==='number'?'$'+car.price.toLocaleString():car.price||'Narx ko‘rsatilmagan';
-    const meta=document.createElement('div');meta.className='purchased-meta';meta.textContent='To‘lov: '+(car.payment||'Buyurtma qabul qilindi')+(car.orderDate?' · Sana: '+car.orderDate:'');
-    details.append(name,price,meta);card.append(img,details);section.appendChild(card);
+(() => {
+  const read = (key, fallback = []) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch { return fallback; } };
+  const currentUser = read('currentUser', null);
+  if (!currentUser || (!currentUser.email && !currentUser.phone)) { window.location.replace('login.html?next=' + encodeURIComponent('profile.html')); return; }
+  if (!currentUser.email) { const accounts = read('carzone_users', []); const match = accounts.find(u => u.phone && u.phone === currentUser.phone); if (match && match.email) currentUser.email = match.email; }
+  if (!currentUser.email) currentUser.email = 'telefon:' + currentUser.phone;
+  const savedProfile = read('userProfile', null);
+  const accountName = (currentUser.name || '').trim().split(/\s+/);
+  let userProfile = {
+    firstName: savedProfile?.email === currentUser.email ? (savedProfile.firstName || accountName[0] || '') : (accountName[0] || ''),
+    lastName: savedProfile?.email === currentUser.email ? (savedProfile.lastName || accountName.slice(1).join(' ')) : accountName.slice(1).join(' '),
+    phone: savedProfile?.email === currentUser.email ? (savedProfile.phone || currentUser.phone || '') : (currentUser.phone || ''), email: currentUser.email
+  };
+  const persistProfile = () => {
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+    const updated = { ...currentUser, name: `${userProfile.firstName} ${userProfile.lastName}`.trim(), phone: userProfile.phone };
+    localStorage.setItem('currentUser', JSON.stringify(updated));
+    const users = read('carzone_users', []), idx = users.findIndex(u => u.email === currentUser.email || (currentUser.phone && u.phone === currentUser.phone));
+    if (idx >= 0) { users[idx] = { ...users[idx], name: updated.name, phone: updated.phone }; localStorage.setItem('carzone_users', JSON.stringify(users)); }
+  };
+  function loadProfile() {
+    document.getElementById('profileName').textContent = `${userProfile.firstName} ${userProfile.lastName}`.trim() || currentUser.name || 'Foydalanuvchi';
+    document.getElementById('profilePhone').textContent = userProfile.phone || 'Kiritilmagan';
+    document.getElementById('profileEmail').textContent = currentUser.email;
+    document.getElementById('avatarInitial').textContent = (userProfile.firstName || currentUser.name || '?').charAt(0).toUpperCase();
+  }
+  loadProfile();
+  function showToast(message, color = '#27ae60') { const el = document.getElementById('toast'); if (!el) return; el.textContent = message; el.style.background = color; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2500); }
+  window.showEditModal = () => { document.getElementById('editFirstName').value = userProfile.firstName; document.getElementById('editLastName').value = userProfile.lastName; document.getElementById('editPhone').value = userProfile.phone; document.getElementById('editModal').classList.add('show'); };
+  window.closeEditModal = () => document.getElementById('editModal').classList.remove('show');
+  document.getElementById('editForm').addEventListener('submit', e => {
+    e.preventDefault(); const firstName = document.getElementById('editFirstName').value.trim(), lastName = document.getElementById('editLastName').value.trim(), phone = document.getElementById('editPhone').value.trim();
+    if (!firstName || !lastName || !phone) return showToast('Barcha maydonlarni to‘ldiring!', '#e74c3c');
+    userProfile = { firstName, lastName, phone, email: currentUser.email }; persistProfile(); loadProfile(); window.closeEditModal(); showToast('Profil muvaffaqiyatli yangilandi!');
   });
-});
+  document.getElementById('editModal').addEventListener('click', e => { if (e.target === e.currentTarget) window.closeEditModal(); });
+  window.showLogoutModal = () => document.getElementById('logoutModal').classList.add('show');
+  window.closeLogoutModal = () => document.getElementById('logoutModal').classList.remove('show');
+  window.confirmLogout = () => { localStorage.removeItem('currentUser'); showToast('Tizimdan chiqildi!', '#e74c3c'); setTimeout(() => { location.href = 'login.html'; }, 500); };
+  document.getElementById('logoutModal').addEventListener('click', e => { if (e.target === e.currentTarget) window.closeLogoutModal(); });
+  const favorites = read('carzoneFavorites', []), favGrid = document.getElementById('favoriteCars'), noFavorites = document.getElementById('noFavorites');
+  if (favGrid && favorites.length) {
+    noFavorites.style.display = 'none'; favorites.forEach(car => {
+      const item = document.createElement('div'); item.className = 'fav-item'; const img = document.createElement('img'); img.src = car.image || ''; img.alt = car.name || 'Avtomobil';
+      const title = document.createElement('h3'); title.textContent = car.name || 'Avtomobil'; const price = document.createElement('p'); price.textContent = car.price || '';
+      const buy = document.createElement('button'); buy.type = 'button'; buy.textContent = 'Sotib olish'; buy.addEventListener('click', () => { localStorage.setItem('selectedCar', JSON.stringify(car)); location.href = 'buy.html'; });
+      const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'remove-fav'; remove.textContent = 'Olib tashlash'; remove.addEventListener('click', () => { localStorage.setItem('carzoneFavorites', JSON.stringify(read('carzoneFavorites', []).filter(x => x.name !== car.name))); location.reload(); });
+      item.append(img, title, price, buy, remove); favGrid.appendChild(item);
+    });
+  }
+  const bought = read('purchasedCars', []), grid = document.getElementById('carsGrid'), clearBtn = document.getElementById('clearBtn');
+  if (grid) {
+    grid.replaceChildren();
+    if (!bought.length) { const empty = document.createElement('div'); empty.className = 'empty-cars'; empty.innerHTML = '<div class="icon">🚗</div><p>Hali hech qanday mashina sotib olmadingiz</p><a href="cars.html">Mashina tanlash</a>'; grid.appendChild(empty); if (clearBtn) clearBtn.style.display = 'none'; }
+    else { bought.slice().reverse().forEach(car => {
+      const card = document.createElement('article'); card.className = 'car-card'; const img = document.createElement('img'); img.src = car.image || ''; img.alt = car.name || 'Avtomobil';
+      const details = document.createElement('div'); details.className = 'car-details'; const name = document.createElement('div'); name.className = 'car-name'; name.textContent = car.name || 'Avtomobil';
+      const price = document.createElement('div'); price.className = 'car-price'; price.textContent = car.price || 'Narx ko‘rsatilmagan'; const meta = document.createElement('div'); meta.className = 'purchased-meta'; meta.textContent = `To‘lov: ${car.payment || car.paymentMethod || 'Buyurtma qabul qilindi'}${car.orderDate ? ' · Sana: ' + car.orderDate : ''}`;
+      details.append(name, price, meta); card.append(img, details); grid.appendChild(card);
+    }); if (clearBtn) clearBtn.style.display = 'block'; }
+  }
+  window.clearHistory = () => { if (confirm('Barcha sotib olish tarixini o‘chirmoqchimisiz?')) { localStorage.setItem('purchasedCars', '[]'); location.reload(); } };
+})();
 </script>
 </body>
 </html>

@@ -20,6 +20,18 @@ header,.header{background:rgba(242,251,249,.9)!important;border-color:#c6e6e4!im
 .car-actions .favorite-toggle{background:#ffe8ec;color:#c83e5b}
 .car-actions .favorite-toggle.saved{background:#c83e5b;color:#fff}
 </style>
+
+<script>
+/* Login tekshiruvi: tizimga kirmagan foydalanuvchini login sahifasiga yuboradi. */
+(function () {
+  const user = localStorage.getItem('currentUser');
+  if (!user) {
+    const next = encodeURIComponent(window.location.pathname.split('/').pop() + window.location.search + window.location.hash);
+    window.location.replace('login.html?next=' + next);
+  }
+})();
+</script>
+
 </head>
 <body>
 

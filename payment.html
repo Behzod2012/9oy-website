@@ -65,6 +65,18 @@ footer{background:rgba(222,245,242,.75)!important;color:#647b8d!important;border
 @media(max-width:700px){header,.header{padding:12px 4%!important;flex-wrap:wrap}.header nav{flex-wrap:wrap;gap:3px}.header nav a{padding:7px 9px;font-size:12px}.car-card{margin-bottom:8px}}
 
 </style>
+
+<script>
+/* Login tekshiruvi: tizimga kirmagan foydalanuvchini login sahifasiga yuboradi. */
+(function () {
+  const user = localStorage.getItem('currentUser');
+  if (!user) {
+    const next = encodeURIComponent(window.location.pathname.split('/').pop() + window.location.search + window.location.hash);
+    window.location.replace('login.html?next=' + next);
+  }
+})();
+</script>
+
 </head>
 
 <body>

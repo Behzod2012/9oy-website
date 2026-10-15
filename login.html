@@ -520,7 +520,8 @@ loginForm.addEventListener("submit", function(event) {
 
     // Xush kelibsiz xabari va index.html ga yo'naltirish
     alert("Xush kelibsiz, " + user.name + "!");
-    window.location.href = "index.html";
+    const nextPage = new URLSearchParams(window.location.search).get('next');
+    window.location.href = (nextPage && !nextPage.includes('://') && !nextPage.startsWith('//')) ? nextPage : 'index.html';
 });
 
 // ============ DEMO HISOB ============
