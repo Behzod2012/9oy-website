@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CARZONE | Oylik to‘lov</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* CARZONE modern colorful refresh */
+:root{
+ --bg:#dff6f2;--bg-soft:#e8e7ff;--surface:rgba(255,255,255,.72);
+ --surface-2:#f8f4ff;--line:#c5e6e3;--line-soft:#cfe8e7;
+ --text:#20334a;--muted:#647b8d;--muted-2:#7e91a0;
+ --accent:#087f8c;--accent-hover:#096b78;
+ --accent-grad:linear-gradient(135deg,#13a6a0,#4778d8 55%,#8c62d9);
+ --success:#16885b;--danger:#d45a67;
+ --shadow-sm:0 5px 18px rgba(48,86,111,.08);
+ --shadow-md:0 14px 36px rgba(48,86,111,.13);
+ --shadow-lg:0 24px 60px rgba(48,86,111,.18);
+ --glow:0 10px 26px rgba(19,166,160,.20);
+}
+html,body{background:linear-gradient(125deg,#dff6f2 0%,#e8e7ff 48%,#fff0df 100%) fixed!important;color:#20334a!important}
+body{min-height:100vh}
+header,.header{background:rgba(237,250,248,.88)!important;border-bottom:1px solid #c6e6e4!important;box-shadow:0 8px 25px rgba(55,95,118,.06)}
+.logo{color:#20334a!important}.logo span{color:#087f8c!important}
+nav a,.header nav a{color:#526c80!important}
+nav a:hover,.header nav a:hover{color:#087f8c!important;background:#d5f2ef!important}
+nav a.active,.header nav a.active{color:#087f8c!important;background:#c9efea!important;box-shadow:inset 0 0 0 1px #9bd9d3!important}
+main{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(71,120,216,.12),transparent 70%)!important}
+.car-card,.profile-card,.cars-section,.payment-card,.contact-form,.comparison-card,.step-card{
+ background:rgba(255,255,255,.78)!important;color:#20334a!important;border:1px solid #c6e6e4!important;
+ box-shadow:0 12px 28px rgba(43,83,107,.10)!important;backdrop-filter:blur(12px)
+}
+.car-card{border-radius:20px!important;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
+.car-card:hover{transform:translateY(-5px)!important;border-color:#68c9c3!important;box-shadow:0 18px 38px rgba(43,83,107,.16)!important}
+.car-info h3,.car-name,.section-title h2,.hero h1,.page-header h1{color:#20334a!important}
+.price,.car-price,.section-title p,.hero-small{color:#087f8c!important}
+.details,.car-info .details{color:#607a8d!important}
+button,.main-btn,.buy-btn,.confirm-btn,.calculate-btn,.login-btn,.btn-edit{background:linear-gradient(135deg,#12a6a0,#4778d8)!important;color:#fff!important;border:0!important;border-radius:12px!important;box-shadow:0 8px 18px rgba(43,132,169,.18)}
+button:hover,.main-btn:hover,.buy-btn:hover,.confirm-btn:hover,.calculate-btn:hover,.login-btn:hover,.btn-edit:hover{filter:brightness(1.06);transform:translateY(-2px)}
+.brand-btn{background:rgba(255,255,255,.72)!important;color:#35546a!important;border:1px solid #b9deda!important}
+.brand-btn.active{background:linear-gradient(135deg,#12a6a0,#4778d8)!important;color:white!important}
+input,select,textarea{background:rgba(255,255,255,.88)!important;color:#20334a!important;border:1px solid #b9deda!important;border-radius:12px!important}
+input::placeholder,textarea::placeholder{color:#8095a3!important}
+footer{background:rgba(222,245,242,.75)!important;color:#647b8d!important;border-top:1px solid #c6e6e4!important}
+.hero{background:radial-gradient(ellipse at 80% 30%,rgba(255,190,122,.36),transparent 42%),radial-gradient(ellipse at 10% 90%,rgba(73,191,185,.28),transparent 45%)!important}
+.dark-section{background:transparent!important}
+.hidden{display:none!important}
+.favorite-btn{position:absolute;right:14px;top:14px;z-index:5;width:42px;height:42px;border-radius:50%!important;background:rgba(255,255,255,.92)!important;color:#d45a67!important;border:1px solid #d6e8e8!important;font-size:21px;padding:0;box-shadow:0 5px 16px #3456!important}
+.car-card{position:relative}
+.card-buy-btn{margin:0 16px 16px;width:calc(100% - 32px);padding:12px}
+.fav-section{max-width:1000px;margin:0 auto 35px;padding:0 20px}
+.fav-section h2{margin:25px 0 15px;color:#20334a}
+.fav-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.fav-item{background:rgba(255,255,255,.75);border:1px solid #c6e6e4;border-radius:16px;padding:15px;color:#20334a}
+.fav-item img{width:100%;height:140px;object-fit:cover;border-radius:12px}
+.fav-item button{margin-top:10px;padding:9px 12px}
+@media(max-width:700px){header,.header{padding:12px 4%!important;flex-wrap:wrap}.header nav{flex-wrap:wrap;gap:3px}.header nav a{padding:7px 9px;font-size:12px}.car-card{margin-bottom:8px}}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        <span>CAR</span>ZONE
+    </div>
+
+    <button class="menu-btn" id="menuBtn">☰</button>
+
+    <nav id="navMenu">
+        <a class="active" href="index.html">Bosh sahifa</a>
+        <a href="cars.html">Avtomobillar</a>
+        <a href="payment.html">Oylik to‘lov</a>
+        <a href="profile.html">Profil</a>
+        <a href="contact.html">Aloqa</a>
+        <a href="compare.html">⚖️</a>
+    </nav>
+
+</header>
+
+
+<section class="page-header">
+
+    <p>CARZONE FINANCE</p>
+
+    <h1>Oylik to‘lov</h1>
+
+    <span>Avtomobil uchun oylik to‘lovni hisoblang</span>
+
+</section>
+
+
+<section class="payment-section">
+
+    <div class="payment-box">
+
+        <h2>To‘lov kalkulyatori</h2>
+
+        <p class="payment-desc">
+            Ma'lumotlarni kiriting va taxminiy oylik to‘lovni hisoblang.
+        </p>
+
+
+        <div class="input-group">
+
+            <label>Mashina narxi ($)</label>
+
+            <input
+                type="number"
+                id="carPrice"
+                value="85000"
+                min="1000"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Boshlang‘ich to‘lov ($)</label>
+
+            <input
+                type="number"
+                id="downPayment"
+                value="15000"
+                min="0"
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Muddat</label>
+
+            <select id="loanMonths">
+
+                <option value="12">12 oy</option>
+
+                <option value="24">24 oy</option>
+
+                <option value="36" selected>
+                    36 oy
+                </option>
+
+                <option value="48">
+                    48 oy
+                </option>
+
+                <option value="60">
+                    60 oy
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Yillik foiz (%)</label>
+
+            <input
+                type="number"
+                id="interestRate"
+                value="12"
+                min="0"
+                step="0.1"
+            >
+
+        </div>
+
+
+        <button
+            class="main-btn calculate-btn"
+            onclick="calculatePayment()"
+        >
+            HISOBLASH
+        </button>
+
+
+        <div class="payment-result">
+
+            <p>Oylik to‘lov</p>
+
+            <h3 id="monthlyPayment">
+                $0
+            </h3>
+
+            <span>
+                Taxminiy hisob-kitob
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="logo">
+        <span>CAR</span>ZONE
+    </div>
+
+    <p>© 2026 CARZONE</p>
+
+</footer>
+
+
+<script src="js/script.js"></script>
+
+</body>
+
+</html>
