@@ -809,6 +809,17 @@ button:disabled{opacity:.45}
 })();
 </script>
 
+<script>
+/* Har bir asosiy sahifada tizimga kirilganini tekshirish */
+(function () {
+  let user = null;
+  try { user = JSON.parse(localStorage.getItem('currentUser') || 'null'); } catch (e) {}
+  if (!user || (!user.email && !user.phone)) {
+    const next = encodeURIComponent(window.location.pathname.split('/').pop() || 'index.html');
+    window.location.replace('login.html?next=' + next);
+  }
+})();
+</script>
 </head>
 <body>
 

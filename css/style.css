@@ -80,7 +80,9 @@ a {
 img {
     max-width: 100%;
 }
-
+.car-card{
+    background: white;
+}
 button,
 input,
 select,
@@ -1606,18 +1608,18 @@ footer p {
 
 /* CARZONE modern colorful refresh */
 :root{
- --bg:#dff6f2;--bg-soft:#e8e7ff;--surface:rgba(255,255,255,.72);
+ --bg:#dff6f2;--bg-soft:#2521aa;--surface:rgba(182, 57, 57, 0.72);
  --surface-2:#f8f4ff;--line:#c5e6e3;--line-soft:#cfe8e7;
- --text:#20334a;--muted:#647b8d;--muted-2:#7e91a0;
+ --text:#2c69b3;--muted:#647b8d;--muted-2:#7e91a0;
  --accent:#087f8c;--accent-hover:#096b78;
  --accent-grad:linear-gradient(135deg,#13a6a0,#4778d8 55%,#8c62d9);
- --success:#16885b;--danger:#d45a67;
+ --success:#14ee97;--danger:#d45a67;
  --shadow-sm:0 5px 18px rgba(48,86,111,.08);
  --shadow-md:0 14px 36px rgba(48,86,111,.13);
  --shadow-lg:0 24px 60px rgba(48,86,111,.18);
  --glow:0 10px 26px rgba(19,166,160,.20);
 }
-html,body{background:linear-gradient(125deg,#dff6f2 0%,#e8e7ff 48%,#fff0df 100%) fixed!important;color:#20334a!important}
+html,body{background:linear-gradient(125deg,#00e1ff 0%,#c6dfff 100%) fixed!important;color:#20334a!important}
 body{min-height:100vh}
 header,.header{background:rgba(237,250,248,.88)!important;border-bottom:1px solid #c6e6e4!important;box-shadow:0 8px 25px rgba(55,95,118,.06)}
 .logo{color:#20334a!important}.logo span{color:#087f8c!important}
@@ -1627,14 +1629,14 @@ nav a.active,.header nav a.active{color:#087f8c!important;background:#c9efea!imp
 main{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(71,120,216,.12),transparent 70%)!important}
 .car-card,.profile-card,.cars-section,.payment-card,.contact-form,.comparison-card,.step-card{
  background:rgba(255,255,255,.78)!important;color:#20334a!important;border:1px solid #c6e6e4!important;
- box-shadow:0 12px 28px rgba(43,83,107,.10)!important;backdrop-filter:blur(12px)
+ box-shadow:0 12px 28px rgba(103, 116, 124, 0.1)!important;backdrop-filter:blur(12px)
 }
-.car-card{border-radius:20px!important;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
+.car-card{background:linear-gradient(125deg,#01e1ff 0%,#c6dfff 100%);border-radius:20px!important;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
 .car-card:hover{transform:translateY(-5px)!important;border-color:#68c9c3!important;box-shadow:0 18px 38px rgba(43,83,107,.16)!important}
-.car-info h3,.car-name,.section-title h2,.hero h1,.page-header h1{color:#20334a!important}
-.price,.car-price,.section-title p,.hero-small{color:#087f8c!important}
-.details,.car-info .details{color:#607a8d!important}
-button,.main-btn,.buy-btn,.confirm-btn,.calculate-btn,.login-btn,.btn-edit{background:linear-gradient(135deg,#12a6a0,#4778d8)!important;color:#fff!important;border:0!important;border-radius:12px!important;box-shadow:0 8px 18px rgba(43,132,169,.18)}
+.car-info h3,.car-name,.section-title h2,.hero h1,.page-header h1{color:#2e7fd1!important;}
+.price,.car-price,.section-title p,.hero-small{color:rgb(255, 255, 255)!important}
+.details,.car-info .details{color:#fcfdfd!important}
+button,.main-btn,.buy-btn,.confirm-btn,.calculate-btn,.login-btn,.btn-edit{background:linear-gradient(135deg,#3e12a6,#4778d8)!important;color:#fff!important;padding: 10px!important;border-radius:12px!important;box-shadow:0 8px 18px rgba(68, 138, 168, 0.18)}
 button:hover,.main-btn:hover,.buy-btn:hover,.confirm-btn:hover,.calculate-btn:hover,.login-btn:hover,.btn-edit:hover{filter:brightness(1.06);transform:translateY(-2px)}
 .brand-btn{background:rgba(255,255,255,.72)!important;color:#35546a!important;border:1px solid #b9deda!important}
 .brand-btn.active{background:linear-gradient(135deg,#12a6a0,#4778d8)!important;color:white!important}
@@ -1654,3 +1656,111 @@ footer{background:rgba(222,245,242,.75)!important;color:#647b8d!important;border
 .fav-item img{width:100%;height:140px;object-fit:cover;border-radius:12px}
 .fav-item button{margin-top:10px;padding:9px 12px}
 @media(max-width:700px){header,.header{padding:12px 4%!important;flex-wrap:wrap}.header nav{flex-wrap:wrap;gap:3px}.header nav a{padding:7px 9px;font-size:12px}.car-card{margin-bottom:8px}}
+
+
+/* ===== Unified CARZONE visual system refresh ===== */
+:root {
+  --bg: #080d18;
+  --bg-soft: #0d1525;
+  --surface: #111c30;
+  --surface-2: #17243a;
+  --line: #293a55;
+  --line-soft: rgba(148, 173, 211, .14);
+  --text: #edf4ff;
+  --muted: #9aacc7;
+  --muted-2: #7285a3;
+  --accent: #ff6b35;
+  --accent-hover: #ff895e;
+  --accent-grad: linear-gradient(135deg, #ff8757 0%, #e94d28 100%);
+  --success: #48d597;
+  --danger: #ff5d69;
+  --glow: 0 12px 32px rgba(255, 107, 53, .22);
+}
+html { background: #080d18; }
+body {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(37, 91, 150, .27), transparent 38%),
+    radial-gradient(ellipse at 88% 22%, rgba(113, 55, 125, .18), transparent 34%),
+    linear-gradient(145deg, #080d18 0%, #0b1424 48%, #101326 100%);
+  color: var(--text);
+}
+main {
+  background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 107, 53, .09), transparent 72%);
+}
+header, .header {
+  background: rgba(8, 13, 24, .86);
+  border-bottom-color: rgba(148, 173, 211, .16);
+}
+a, button, input, select, textarea { transition: color .22s ease, background .22s ease, border-color .22s ease, transform .22s ease, box-shadow .22s ease; }
+button, .main-btn, .outline-btn, .btn-edit, .btn-logout {
+  border-radius: 12px;
+}
+input, select, textarea {
+  background-color: rgba(8, 15, 29, .8);
+  color: #edf4ff;
+  border: 1px solid #30415e;
+  border-radius: 10px;
+}
+.car-card, .profile-card, .login-container, .compare-card, .contact-card, .form-container {
+  color: var(--text);
+  background: linear-gradient(145deg, rgba(23, 36, 58, .96), rgba(13, 21, 37, .96));
+  border: 1px solid rgba(148, 173, 211, .19);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .24);
+}
+.car-card { overflow: hidden; }
+.car-card:hover { border-color: rgba(255, 107, 53, .55); transform: translateY(-5px); }
+.section, .dark-section { background: transparent; }
+.brands button, .tab-btn.active { color: #fff; }
+button:hover, .main-btn:hover, .btn-edit:hover, .btn-logout:hover { filter: brightness(1.08); }
+footer { background: rgba(6, 10, 19, .85); border-top: 1px solid var(--line-soft); }
+@media (max-width: 700px) {
+  header, .header { padding: 14px 5%; }
+}
+
+/* ===== Unified CARZONE visual system ===== */
+:root {
+  --bg: #061426;
+  --bg-soft: #081a30;
+  --surface: rgba(7, 24, 44, .94);
+  --surface-2: rgba(13, 34, 57, .96);
+  --line: rgba(115, 161, 205, .20);
+  --line-soft: rgba(115, 161, 205, .12);
+  --text: #f4f8ff;
+  --muted: #a5b6c9;
+  --muted-2: #7890aa;
+  --accent: #ff791f;
+  --accent-hover: #ff9a45;
+  --accent-grad: linear-gradient(135deg, #ff8b2b 0%, #ff6418 100%);
+  --glow: 0 10px 32px rgba(255, 111, 24, .22);
+}
+html { background: #061426; }
+body {
+  background:
+    linear-gradient(135deg, rgba(3, 13, 27, .88), rgba(4, 20, 39, .78)),
+    url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2200&q=85') center / cover fixed,
+    #061426;
+}
+main { background: radial-gradient(ellipse 80% 45% at 50% 0%, rgba(37, 111, 181, .18), transparent 72%); }
+header, .header {
+  background: rgba(3, 16, 32, .88);
+  border-bottom: 1px solid rgba(120, 166, 210, .18);
+  box-shadow: 0 8px 30px rgba(0,0,0,.16);
+}
+.logo span, nav a.active, .header nav a.active { color: var(--accent); }
+nav a.active, .header nav a.active {
+  background: rgba(255, 121, 31, .10);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+button, .btn, input[type="submit"], .button { border-radius: 9px; }
+button:hover, .btn:hover, input[type="submit"]:hover, .button:hover { filter: brightness(1.08); }
+.card, .car-card, .vehicle-card, .profile-card, .form-container, .login-box,
+section article, .modal-content {
+  border-color: var(--line);
+  box-shadow: 0 14px 36px rgba(0,0,0,.20);
+}
+input, select, textarea {
+  background-color: rgba(4, 19, 36, .82);
+  color: var(--text);
+  border-color: var(--line);
+}
+input::placeholder, textarea::placeholder { color: #8096ad; }

@@ -32,6 +32,17 @@ header,.header{background:rgba(242,251,249,.9)!important;border-color:#c6e6e4!im
 })();
 </script>
 
+<script>
+/* Har bir asosiy sahifada tizimga kirilganini tekshirish */
+(function () {
+  let user = null;
+  try { user = JSON.parse(localStorage.getItem('currentUser') || 'null'); } catch (e) {}
+  if (!user || (!user.email && !user.phone)) {
+    const next = encodeURIComponent(window.location.pathname.split('/').pop() || 'index.html');
+    window.location.replace('login.html?next=' + next);
+  }
+})();
+</script>
 </head>
 <body>
 
