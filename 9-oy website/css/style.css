@@ -1714,3 +1714,48 @@ footer { background: rgba(6, 10, 19, .85); border-top: 1px solid var(--line-soft
 @media (max-width: 700px) {
   header, .header { padding: 14px 5%; }
 }
+
+/* ================= PREMIUM MOTION FEATURE ================= */
+@keyframes motionFadeUp {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes motionFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes motionHeroFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes motionShimmer { 0% { background-position: 180% 0; } 100% { background-position: -180% 0; } }
+
+/* Entrance animations are activated by JavaScript only after page load. */
+.motion-ready .motion-reveal { opacity: 0; transform: translate3d(0, 24px, 0); }
+.motion-ready .motion-reveal.is-visible { animation: motionFadeUp .72s cubic-bezier(.22,.61,.36,1) both; }
+.motion-ready .motion-reveal[data-motion-delay="1"].is-visible { animation-delay: .08s; }
+.motion-ready .motion-reveal[data-motion-delay="2"].is-visible { animation-delay: .16s; }
+.motion-ready .motion-reveal[data-motion-delay="3"].is-visible { animation-delay: .24s; }
+.motion-ready .motion-reveal[data-motion-delay="4"].is-visible { animation-delay: .32s; }
+
+header, .header { transition: background-color .3s ease, box-shadow .3s ease, border-color .3s ease; }
+nav a, .header nav a, .logo, .footer-logo { transition: color .25s ease, transform .25s ease; }
+nav a:hover, .header nav a:hover { transform: translateY(-2px); }
+.car-card, .card, .vehicle-card, .profile-card, .brand-card, .brand-item, .form-container, .login-box, .modal-content {
+  transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s ease, border-color .35s ease;
+}
+.car-card:hover, .card:hover, .vehicle-card:hover, .profile-card:hover, .brand-card:hover, .brand-item:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 22px 48px rgba(0,0,0,.28);
+}
+.car-card img, .vehicle-card img, .brand-card img { transition: transform .55s cubic-bezier(.22,.61,.36,1), filter .35s ease; }
+.car-card:hover img, .vehicle-card:hover img, .brand-card:hover img { transform: scale(1.045); }
+.main-btn, .confirm-btn, .buy-btn, .calculate-btn, .login-btn, .outline-btn, button, input[type="submit"] {
+  transition: transform .22s ease, box-shadow .28s ease, filter .22s ease, background-color .22s ease;
+}
+.main-btn:active, .confirm-btn:active, .buy-btn:active, .calculate-btn:active, .login-btn:active, .outline-btn:active, button:active, input[type="submit"]:active { transform: scale(.97); }
+.hero-content { animation: motionFadeUp .8s cubic-bezier(.22,.61,.36,1) both; }
+.hero img, .hero-image { animation: motionFadeIn 1.1s ease both; }
+.section-title { transition: transform .3s ease; }
+input, select, textarea { transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease; }
+input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px rgba(69,214,197,.12); }
+.modal.show .modal-content { animation: motionFadeUp .32s cubic-bezier(.22,.61,.36,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .motion-ready .motion-reveal { opacity: 1; transform: none; }
+}

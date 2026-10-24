@@ -325,3 +325,51 @@ function logout() {
     localStorage.removeItem('user');
     window.location.href = 'index.html';
 }
+// ================= PREMIUM MOTION FEATURE =================
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const candidates = document.querySelectorAll(
+    'main > section, main .section, .section-title, .car-card, .brand-btn, .car-grid, .brands, .hero-content, .page-header, .form-container, .login-box, .profile-card, .compare-container, .contact-container, .site-footer .footer-column'
+  );
+  if (!candidates.length || reduceMotion) return;
+
+  document.body.classList.add('motion-ready');
+  candidates.forEach((element, index) => {
+    if (element.closest('.modal') || element.matches('.hero-content')) return;
+    element.classList.add('motion-reveal');
+    if (element.matches('.car-card, .brand-btn, .site-footer .footer-column')) {
+      element.dataset.motionDelay = String((index % 4) + 1);
+    }
+  });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, currentObserver) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          currentObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' });
+    document.querySelectorAll('.motion-reveal').forEach(element => observer.observe(element));
+  } else {
+    document.querySelectorAll('.motion-reveal').forEach(element => element.classList.add('is-visible'));
+  }
+
+  // Gentle pointer tilt for desktop cards; disabled on touch devices.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('.car-card, .vehicle-card').forEach(card => {
+      card.addEventListener('pointermove', event => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        card.style.setProperty('--motion-x', `${x * 2}deg`);
+        card.style.setProperty('--motion-y', `${y * -2}deg`);
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.removeProperty('--motion-x');
+        card.style.removeProperty('--motion-y');
+      });
+    });
+  }
+})();

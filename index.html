@@ -166,29 +166,17 @@
             </div>
 
 
-            <div class="car-card">
-
-                <img src="./img/supra.webp">
-
-                <div class="car-info">
-
-                    <span class="car-brand">TOYOTA</span>
-
-                    <h3>Toyota Supra</h3>
-
-                    <p>3.0L • 382 HP • Automatic</p>
-
-                    <div class="car-bottom">
-                        <strong>$58,000</strong>
-
-                        <button onclick="openCar('Toyota Supra')">
-                            Batafsil →
-                        </button>
-                    </div>
-
+            <div class="car-card" data-brand="Tesla">
+            <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=900&q=80">
+            <div class="car-info">
+                <h3>Tesla Model S</h3>
+                <div class="price">$79,000</div>
+                <div class="details">
+                    <span>📅 2024</span>
+                    <span>⚡ Elektro</span>
                 </div>
-
             </div>
+        </div>
             
 
         </div>
@@ -212,7 +200,75 @@
 
 
 <script src="script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ const getData=card=>({
+   name:card.querySelector('h3')?.textContent.trim()||card.querySelector('.car-name')?.textContent.trim()||'Avtomobil',
+   price:card.querySelector('.price,.car-price')?.textContent.trim()||'Narx kelishiladi',
+   image:card.querySelector('img')?.getAttribute('src')||'',
+   brand:card.dataset.brand||card.querySelector('.car-brand')?.textContent.trim()||''
+ });
+ document.querySelectorAll('.car-card').forEach(card=>{
+   if(!card.querySelector('.favorite-btn')){
+     const fav=document.createElement('button'); fav.type='button'; fav.className='favorite-btn'; fav.textContent='♡'; fav.title='Yoqtirganlarga qo‘shish';
+     fav.addEventListener('click',e=>{
+       e.preventDefault();e.stopPropagation();
+       const car=getData(card), list=JSON.parse(localStorage.getItem('carzoneFavorites')||'[]');
+       const index=list.findIndex(x=>x.name===car.name);
+       if(index>=0){list.splice(index,1);fav.textContent='♡';fav.style.color='#d45a67';}
+       else{list.push(car);fav.textContent='♥';fav.style.color='#087f8c';}
+       localStorage.setItem('carzoneFavorites',JSON.stringify(list));
+       fav.title=index>=0?'Yoqtirganlardan olib tashlandi':'Yoqtirganlarga qo‘shildi';
+       if(index<0) location.href='profile.html#favorites';
+     });
+     const wasFav=JSON.parse(localStorage.getItem('carzoneFavorites')||'[]').some(x=>x.name===getData(card).name);
+     if(wasFav)fav.textContent='♥';
+     card.appendChild(fav);
+   }
+   if(!card.querySelector('.card-buy-btn')){
+     const buy=document.createElement('button');buy.type='button';buy.className='card-buy-btn';buy.textContent='Sotib olish →';
+     buy.addEventListener('click',e=>{
+       e.preventDefault();e.stopPropagation();
+       const car=getData(card);
+       localStorage.setItem('selectedCar',JSON.stringify(car));
+       location.href='buy.html';
+     });
+     card.appendChild(buy);
+   }
+ });
+});
+</script>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('#cars .car-card');
+  const getFavorites = () => JSON.parse(localStorage.getItem('carzoneFavorites') || '[]');
+  cards.forEach((card, index) => {
+    const img = card.querySelector('img');
+    const name = card.querySelector('h3')?.textContent.trim() || 'Avtomobil';
+    const price = card.querySelector('.price')?.textContent.trim() || '';
+    const details = [...card.querySelectorAll('.details span')].map(x => x.textContent.trim());
+    const car = {
+      id: index + 1,
+      brand: card.dataset.brand || '',
+      name, price, image: img?.getAttribute('src') || '',
+      year: details[0] || '', fuel: details[1] || ''
+    };
+    refresh();
+    fav.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation();
+      let list = getFavorites();
+      if (list.some(x => x.name === car.name)) list = list.filter(x => x.name !== car.name);
+      else list.push(car);
+      localStorage.setItem('carzoneFavorites', JSON.stringify(list));
+      refresh();
+    });
+    actions.append(buy, fav);
+    card.appendChild(actions);
+  });
+});
+</script>
 
 <style id="carzone-unified-background">
 html, body { min-height:100%; background:linear-gradient(135deg,#17233b 0%,#202f4d 48%,#26334f 100%) fixed !important; color:#f2f5ff; }
